@@ -1,5 +1,5 @@
 {
-  "name": "passport-google-id-token",
+  "name": "passport-google-oidc-token",
   "version": "0.4.7",
   "description": "Google ID token authentication strategy for Passport.",
   "keywords": [
@@ -9,22 +9,19 @@
     "token",
     "verification",
     "authentication",
-    "identity"
+    "identity",
+    "oidc",
+    "jwt"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/jmreyes/passport-google-id-token.git"
+    "url": "git://github.com/ChrisEdson/passport-google-oidc-token.git"
   },
   "bugs": {
-    "url": "http://github.com/jmreyes/passport-google-id-token/issues"
-  },
-  "author": {
-    "name": "Juan Manuel Reyes",
-    "email": "juanma.resp@gmail.com",
-    "url": "http://jmreyes.net"
+    "url": "http://github.com/ChrisEdson/passport-google-oidc-token/issues"
   },
   "license": "MIT",
-  "main": "./lib/passport-google-id-token",
+  "main": "./lib/passport-google-oidc-token",
   "dependencies": {
     "jsonwebtoken": "^5.0.0",
     "passport-strategy": "^1.0.0",
@@ -36,7 +33,7 @@
     "mocha": "^7.1.1"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 14.0.0"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"

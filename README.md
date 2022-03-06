@@ -1,7 +1,4 @@
-passport-google-id-token
-========================
-
-[![Build Status](https://travis-ci.org/jmreyes/passport-google-id-token.svg?branch=master)](https://travis-ci.org/jmreyes/passport-google-id-token)
+# passport-google-oidc-token
 
 Google ID token authentication strategy for [Passport](http://passportjs.org/) and [Node.js](http://nodejs.org/).
 
@@ -19,7 +16,7 @@ More information about ID token use cases:
 
 ## Install
 
-    $ npm install passport-google-id-token
+    $ npm install passport-google-oidc-token
 
 ## Usage
 
@@ -31,18 +28,21 @@ The strategy also requires the Google client ID(s) inside the passed `options`.
 An optional `getGoogleCerts` function can be specified to customize the way the Google certificates are retrieved, interesting e.g. in case a caching mechanism is needed. If not specified, the default mechanism will query the Google servers every time.
 
 ```js
-var GoogleTokenStrategy = require('passport-google-id-token');
+const GoogleTokenStrategy = require("passport-google-oidc-token");
 
-passport.use(new GoogleTokenStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    getGoogleCerts: optionalCustomGetGoogleCerts
-  },
-  function(parsedToken, googleId, done) {
-    User.findOrCreate({ googleId: googleId }, function (err, user) {
-      return done(err, user);
-    });
-  }
-));
+passport.use(
+  new GoogleTokenStrategy(
+    {
+      clientID: GOOGLE_CLIENT_ID,
+      getGoogleCerts: optionalCustomGetGoogleCerts,
+    },
+    function (parsedToken, googleId, done) {
+      User.findOrCreate({ googleId: googleId }, function (err, user) {
+        return done(err, user);
+      });
+    }
+  )
+);
 ```
 
 #### Authenticate Requests
@@ -50,11 +50,12 @@ passport.use(new GoogleTokenStrategy({
 Use `passport.authenticate()`, specifying the `'google-id-token'` strategy, to authenticate requests.
 
 ```js
-app.post('/auth/google',
-  passport.authenticate('google-id-token'),
+app.post(
+  "/auth/google",
+  passport.authenticate("google-id-token"),
   function (req, res) {
     // do something with req.user
-    res.send(req.user? 200 : 401);
+    res.send(req.user ? 200 : 401);
   }
 );
 ```
@@ -67,19 +68,19 @@ This library leverages [node-jsonwebtoken](https://github.com/auth0/node-jsonweb
 
 ## Credits
 
-  - [Juanma Reyes](http://github.com/jmreyes)
-  - [Mike Nicholson](http://github.com/themikenicholson)
-  - [Marco Sanson](http://github.com/marcosanson)
-  - [Michal Kubenka](https://github.com/mkubenka)
-  - [Tom Hoag](https://github.com/tomhoag)
-  - [Bence Ferdinandy](https://github.com/priestoferis)
-  - [Jonas Scheffner](https://github.com/jscheffner)
+- [Juanma Reyes](http://github.com/jmreyes)
+- [Mike Nicholson](http://github.com/themikenicholson)
+- [Marco Sanson](http://github.com/marcosanson)
+- [Michal Kubenka](https://github.com/mkubenka)
+- [Tom Hoag](https://github.com/tomhoag)
+- [Bence Ferdinandy](https://github.com/priestoferis)
+- [Jonas Scheffner](https://github.com/jscheffner)
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2014-2018 Juan Manuel Reyes
+Copyright (c) 2022 Chris Edson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

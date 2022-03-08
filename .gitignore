@@ -1,1 +1,10 @@
+docs/
+reports/
+
+.DS_Store
+
 node_modules
+npm-debug.log
+lib
+
+.vscode/settings.json

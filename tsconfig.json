@@ -1,0 +1,22 @@
+{
+  "module": "commonjs",
+
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "es2020",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "lib",
+    // Ensure that .d.ts files are created by tsc, but not .js files - as we use Babel for that
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    // Ensure that Babel can safely transpile files in the TypeScript project
+    "isolatedModules": true
+  },
+
+  "include": ["src/**/*.ts"]
+}

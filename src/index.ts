@@ -39,8 +39,7 @@ type DoneCallback = (
 ) => void;
 
 type VerifyArgs = [
-  accessToken: string,
-  refreshToken: string,
+  idToken: string,
   profile: Profile,
   doneCallback: DoneCallback,
 ];
@@ -135,26 +134,17 @@ export default class GoogleOIDCTokenStrategy {
         return this.success(user, info);
       };
 
-      const accessToken = '123';
-      const refreshToken = '234';
-
       const profile = GoogleOIDCTokenStrategy.parseProfile(payload);
 
       if (this._passReqToCallback) {
         (this._verify as VerifyFunctionWithRequest)(
           req,
-          accessToken,
-          refreshToken,
+          idToken,
           profile,
           verifiedFunction,
         );
       } else {
-        (this._verify as VerifyFunction)(
-          accessToken,
-          refreshToken,
-          profile,
-          verifiedFunction,
-        );
+        (this._verify as VerifyFunction)(idToken, profile, verifiedFunction);
       }
     } catch (err) {
       this.error(err);

@@ -7,12 +7,7 @@ This is useful for scenarios where we don't want to perform API calls to Google 
 
 Official Google documentation:
 
-- [Authenticate with a backend server](https://developers.google.com/identity/sign-in/android/backend-auth)
-
-More information about ID token use cases:
-
-- [Client-Server Authentication with ID tokens](http://www.riskcompletefailure.com/2013/11/client-server-authentication-with-id.html)
-- [Verifying Back-End Calls from Android Apps](http://android-developers.blogspot.in/2013/01/verifying-back-end-calls-from-android.html)
+- [Authenticate with a backend server](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token)
 
 ## Install
 
@@ -22,59 +17,43 @@ More information about ID token use cases:
 
 #### Configure Strategy
 
-The strategy requires a `verify` callback which accepts the `idToken` coming from the user to be authenticated, and then calls the `done` callback supplying a `parsedToken` (with all its information in visible form) and the `googleId`.
+The strategy requires a `verify` callback which accepts the `id_token` coming from the user to be authenticated, and then calls the `done` callback.
 
 The strategy also requires the Google client ID(s) inside the passed `options`.
-An optional `getGoogleCerts` function can be specified to customize the way the Google certificates are retrieved, interesting e.g. in case a caching mechanism is needed. If not specified, the default mechanism will query the Google servers every time.
 
 ```js
-const GoogleTokenStrategy = require("passport-google-oidc-token");
+const GoogleTokenStrategy = require('passport-google-oidc-token');
 
 passport.use(
   new GoogleTokenStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
-      getGoogleCerts: optionalCustomGetGoogleCerts,
     },
     function (parsedToken, googleId, done) {
       User.findOrCreate({ googleId: googleId }, function (err, user) {
         return done(err, user);
       });
-    }
-  )
+    },
+  ),
 );
 ```
 
 #### Authenticate Requests
 
-Use `passport.authenticate()`, specifying the `'google-id-token'` strategy, to authenticate requests.
+Use `passport.authenticate()`, specifying the `'google-oidc-token'` strategy, to authenticate requests.
 
 ```js
 app.post(
-  "/auth/google",
-  passport.authenticate("google-id-token"),
+  '/auth/google',
+  passport.authenticate('google-oidc-token'),
   function (req, res) {
     // do something with req.user
     res.send(req.user ? 200 : 401);
-  }
+  },
 );
 ```
 
 The post request to this route should include a JSON object with the key `id_token` set to the one the client received from Google (e.g. after successful Google+ sign-in).
-
-#### About JWT validation
-
-This library leverages [node-jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for JWT token validation. An optional `jwtOptions` can be specified to customize the way this validation is performed as per [the documentation](https://github.com/auth0/node-jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback).
-
-## Credits
-
-- [Juanma Reyes](http://github.com/jmreyes)
-- [Mike Nicholson](http://github.com/themikenicholson)
-- [Marco Sanson](http://github.com/marcosanson)
-- [Michal Kubenka](https://github.com/mkubenka)
-- [Tom Hoag](https://github.com/tomhoag)
-- [Bence Ferdinandy](https://github.com/priestoferis)
-- [Jonas Scheffner](https://github.com/jscheffner)
 
 ## License
 

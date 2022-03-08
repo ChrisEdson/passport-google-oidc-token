@@ -141,11 +141,20 @@ export default class GoogleOIDCTokenStrategy {
       const profile = GoogleOIDCTokenStrategy.parseProfile(payload);
 
       if (this._passReqToCallback) {
-        // @ts-expect-error _verify is typed as VerifyFunctionWithRequest
-        this._verify(req, accessToken, refreshToken, profile, verifiedFunction);
+        (this._verify as VerifyFunctionWithRequest)(
+          req,
+          accessToken,
+          refreshToken,
+          profile,
+          verifiedFunction,
+        );
       } else {
-        // @ts-expect-error _verify is typed as VerifyFunction
-        this._verify(accessToken, refreshToken, profile, verifiedFunction);
+        (this._verify as VerifyFunction)(
+          accessToken,
+          refreshToken,
+          profile,
+          verifiedFunction,
+        );
       }
     } catch (err) {
       this.error(err);
